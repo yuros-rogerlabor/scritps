@@ -1,5 +1,7 @@
 #!/bin/env bash
 
+set -e
+
 hoster=./server
 
 ## PREP
