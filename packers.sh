@@ -107,6 +107,7 @@ function packers_wikigen_deploy() {
         return
     fi
 
+    test -r $conten/docs && rm -fr $conten/docs
     mkdir -p $conten/docs
 
     for article in $list
