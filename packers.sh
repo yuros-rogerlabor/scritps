@@ -6,8 +6,8 @@ hoster=./server
 conten=./server/content
 ghapis=./server/assets/api/github
 
-## PREP
 
+## PREP
 function packers_prepar_engines() {
     echo "--[1] prepare content"
     hugo new site $hoster
@@ -24,8 +24,6 @@ function packers_prepar_content() {
     test -d $hoster/content && rm -fr $hoster/content
     cp -fr ./doc $hoster/content
 }
-
-
 
 
 function packer_prepare() {
