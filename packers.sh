@@ -14,6 +14,7 @@ function packers_prepar_engines() {
     echo $skins
     git clone "https://github.com/almuhdilkarim/${skins}.git" "$hoster/themes/${skins}"
     rm -fr $hoster/themes/${skins}/content/blog
+    rm -fr $hoster/themes/${skins}/content/mans
     rm -f $hoster/themes/${skins}/content/_index.md
 }
 
