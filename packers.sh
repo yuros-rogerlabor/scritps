@@ -91,14 +91,14 @@ function packer_apisgen() {
 
 ## WIKI
 
-function packers_wikigen_takers() {
+function packers_docsgen_takers() {
     test -d ./temp && rm -fr ./temp
     git clone "https://github.com/$github_upstream.wiki.git" ./temp
 }
 
 
 
-function packers_wikigen_deploy() {
+function packers_docsgen_deploy() {
 
     local list=$( ls ./temp/ )
     local sums=1
@@ -131,16 +131,16 @@ function packers_wikigen_deploy() {
 }
 
 
-function packers_wikigen_finish() {
+function packers_docsgen_finish() {
 
     rm -fr ./temp
 }
 
 
-function packer_wikigen() {
-    packers_wikigen_takers &&
-    packers_wikigen_deploy &&
-    packers_wikigen_finish
+function packer_docsgen() {
+    packers_docsgen_takers &&
+    packers_docsgen_deploy &&
+    packers_docsgen_finish
 }
 
 
@@ -175,7 +175,7 @@ function packer_sitegen() {
 function packer() {
     packers_prepar
     packer_apisgen
-    packer_wikigen
+    packer_docsgen
     packer_sitegen
 }
 
