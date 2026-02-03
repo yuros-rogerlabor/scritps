@@ -146,10 +146,14 @@ function packer_wikigen() {
 ## BASE
 function packer_sitegen_configs() {
 
+    test -f $hoster/hugo.toml && rm $hoster/hugo.toml
+
     echo "title: $title"        >  $hoster/hugo.yaml
     echo "baseURL: $hosts"      >> $hoster/hugo.yaml
     echo "languageCode: $langs" >> $hoster/hugo.yaml
     echo "theme: $skins"        >> $hoster/hugo.yaml
+
+    cat $hoster/hugo.yaml
 }
 
 
