@@ -15,7 +15,7 @@ function packers_prepar_generat() {
 }
 
 function packers_prepar() {
-    packers_prepare_generat
+    packers_prepar_generat
 }
 
 
