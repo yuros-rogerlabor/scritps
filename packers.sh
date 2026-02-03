@@ -113,7 +113,7 @@ function packers_docsgen_deploy() {
     for article in $list
     do
 
-        if [[ sums == 1 ]]; then
+        if [[ $sums == 1 ]]; then
             local title=$(echo "$article" | sed 's/.md//g')
             local file="$conten/docs/_index.md"
         else
