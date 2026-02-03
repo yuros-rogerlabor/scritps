@@ -13,15 +13,15 @@ function packers_prepar_engines() {
     hugo new site $hoster
     echo $skins
     git clone "https://github.com/almuhdilkarim/${skins}.git" "$hoster/themes/${skins}"
-    ls -la &&
-    ls -la $hoster/
-    ls -la $hoster/themes
+    rm -fr $hoster/themes/${skins}/content/blog
+    rm -f $hoster/themes/${skins}/content/_index.md
 }
+
 
 function packers_prepar_content() {
     echo "--[2] prepare content"
     test -d $hoster/content && rm -fr $hoster/content
-    cp -fr $hoster/themes/${skins}/content/pack ./doc
+    cp -fr ./doc $hoster/content
 }
 
 
