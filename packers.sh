@@ -8,7 +8,7 @@ ghapis=./server/assets/api/github
 
 ## PREP
 
-function packer_prepare_engines() {
+function packers_prepar_engines() {
     echo "--[1] prepare content"
     hugo new site $hoster
     echo $skins
@@ -18,7 +18,7 @@ function packer_prepare_engines() {
 }
 
 
-function packer_prepare_content() {
+function packers_prepar_content() {
     echo "--[2] prepare content"
     test -d $hoster/content && rm -fr $hoster/content
     cp -fr ./doc $hoster/content
