@@ -169,6 +169,8 @@ function packers_mansgen_takers() {
 
 function packer_mansgen() {
 
+    echo "man: $source_linuxman"
+
     if [[ -z $source_linuxman ]];then
         return
     fi
