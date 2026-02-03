@@ -8,7 +8,7 @@ ghapis=./server/assets/api/github
 
 ## PREP
 
-function packers_prepar_engines() {
+function packer_prepare_engines() {
     echo "--[1] prepare content"
     hugo new site $hoster
     echo $skins
@@ -18,7 +18,7 @@ function packers_prepar_engines() {
 }
 
 
-function packers_prepar_content() {
+function packer_prepare_content() {
     echo "--[2] prepare content"
     test -d $hoster/content && rm -fr $hoster/content
     cp -fr ./doc $hoster/content
@@ -27,7 +27,7 @@ function packers_prepar_content() {
 
 
 
-function packers_prepar() {
+function packer_prepare() {
     packers_prepar_engines
     packers_prepar_content
 }
@@ -148,9 +148,32 @@ function packer_docsgen() {
 
 
 ## SITE
+function packers_mansgen_takers() {
+
+    local file="$conten/mans/_index.md"
+
+    mkdir -p $conten/mans
+
+    curl -o $conten/mans/index.txt $source_linuxman.txt
+    pandoc -s $conten/mans/index.txt -t markdown -o $file
+    rm -f conten/mans/index.txt
+
+    echo "---" > "$file"
+    echo "title : manual" >> "$file"
+    echo "---" >> "$file"
+
+    cat $file
+
+}
+
 
 function packer_mansgen() {
-    pandoc --version
+
+    if [[ -z $source_linuxman ]];then
+        return
+    fi
+
+    packers_mansgen_takers
 }
 
 
@@ -183,7 +206,7 @@ function packer_sitegen() {
 
 ## INIT
 function packer() {
-    packers_prepar
+    packer_prepare
     packer_apisgen
     packer_docsgen
     packer_mansgen
