@@ -186,6 +186,7 @@ function packer() {
     packers_prepar
     packer_apisgen
     packer_docsgen
+    packer_mansgen
     packer_sitegen
 }
 
