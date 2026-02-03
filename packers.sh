@@ -154,13 +154,23 @@ function packers_mansgen_takers() {
 
     mkdir -p $conten/mans
 
-    curl -o $conten/mans/index.txt $source_linuxman.txt
-    pandoc -s $conten/mans/index.txt -t markdown -o $file
-    rm -f conten/mans/index.txt
 
     echo "---" > "$file"
     echo "title : manual" >> "$file"
     echo "---" >> "$file"
+    echo "" >> "$file"
+
+    curl -o $conten/mans/temp.txt $source_linuxman.txt
+    pandoc -s $conten/mans/temp.txt -t markdown -o $conten/mans/temp.md
+    cat $conten/mans/temp.md >> "$file
+    cat $conten/mans/temp.txt
+    cat $conten/mans/temp.md
+
+
+
+
+    rm -f conten/mans/temp.txt
+    rm -f conten/mans/temp.md
 
     cat $file
 
