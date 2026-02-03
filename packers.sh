@@ -7,14 +7,9 @@ conten=./server/content
 ghapis=./server/assets/api/github
 
 ## PREP
-function packers_prepar_content() {
-    test -d $hoster/content && rm -fr $hoster/content
-    cp -fr .doc $hoster/content
-}
 
-
-function packers_prepar_generat() {
-
+function packers_prepar_engines() {
+    echo "--[1] prepare content"
     hugo new site $hoster
     echo $skins
     git clone "https://github.com/almuhdilkarim/${skins}.git" "$hoster/themes/${skins}"
@@ -23,9 +18,17 @@ function packers_prepar_generat() {
     ls -la $hoster/themes
 }
 
+function packers_prepar_content() {
+    echo "--[2] prepare content"
+    test -d $hoster/content && rm -fr $hoster/content
+    cp -fr .doc $hoster/content
+}
+
+
+
 
 function packers_prepar() {
-    packers_prepar_generat
+    packers_prepar_engines
     packers_prepar_content
 }
 
@@ -41,32 +44,38 @@ function packers_apisgen_prepar() {
 
 function packers_apisgen_reposi() {
     curl -o $ghapis/repo.json https://api.github.com/repos/$github_upstream 
+    echo "repo api : $ghapis/repo.json"
+
 }
 
 
 function packers_apisgen_releas() {
     curl -o $ghapis/rels.json https://api.github.com/repos/$github_upstream/releases 
+    echo "rels api : $ghapis/rels.json"
 }
 
 
 function packers_apisgen_contri() {
     curl -o $ghapis/cont.json https://api.github.com/repos/$github_upstream/contributors
+    echo "cont api : $ghapis/cont.json"
 }
 
 
 function packers_apisgen_versio() {
     curl -o $ghapis/vers.json https://api.github.com/repos/$github_upstream/releases/latest
+    echo "vers api : $ghapis/vers.json"
 }
 
 
 function packers_apisgen_devels() {
     curl -o $ghapis/devs.json https://api.github.com/users/$github_publishe
-
+    echo "devs api : $ghapis/devs.json"
 }
 
 
 function packers_apisgen_packer() {
     curl -o $ghapis/pkgs.json https://api.github.com/repos/$github_packager/contributors
+    echo "pkgs api : $ghapis/pkgs.json"
 }
 
 
