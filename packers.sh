@@ -146,8 +146,9 @@ function packer_wikigen() {
 ## BASE
 function packer_sitegen_packcon() {
     test -d $hoster/config && rm -fr $hoster/config
-    cp -f $hoster/themes/${skins}/config $hoster/config
+    cp -fr $hoster/themes/${skins}/config $hoster/config
 }
+
 
 function packer_sitegen_sitecon() {
 
