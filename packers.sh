@@ -85,7 +85,7 @@ function packers_wikigen_deploy() {
         else
             local title=$(echo "$article" | sed 's/.md//g')
             local file="./content/docs/${title,,}.md"
-        if
+        fi
         
         echo "---" > "$file"
         echo "title : ${title,,}" >> "$file"
