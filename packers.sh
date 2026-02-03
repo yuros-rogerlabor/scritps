@@ -161,7 +161,7 @@ function packers_mansgen_takers() {
     echo "" >> "$file"
 
     curl -o $conten/mans/temp.txt $source_linuxman.txt
-    pandoc -s $conten/mans/temp.txt -t markdown -o $conten/mans/temp.md
+    pandoc -s -f man -t markdown $conten/mans/temp.txt -o $conten/mans/temp.md
     cat $conten/mans/temp.md >> "$file"
     cat $conten/mans/temp.txt
     cat $conten/mans/temp.md
