@@ -15,10 +15,6 @@ function packers_prepar_engines() {
     git clone "https://github.com/almuhdilkarim/${skins}.git" "$hoster/themes/${skins}"
     rm -fr $hoster/themes/${skins}/content/tutorials
     rm -f $hoster/themes/${skins}/content/_index.md
-
-    if [[ -n $source_linuxman ]]; then
-        rm -fr $hoster/themes/${skins}/content/manuals
-    fi
 }
 
 
@@ -152,20 +148,8 @@ function packer_docsgen() {
 
 ## SITE
 function packers_mansgen_takers() {
-
-    local file="$conten/manuals/_index.md"
-
-    mkdir -p $conten/manuals
-
-
-    curl -o $conten/manuals/file.txt $source_linuxman.txt
-
-    echo "---" > "$file"
-    echo "title : manual" >> "$file"
-    echo "links : file.txt" >> "$file"
-    echo "---" >> "$file"
-    echo "" >> "$file"
-
+    local file="$conten/package/manual.md"
+    curl -o $conten/package/manual/file.txt $source_linuxman.txt
 }
 
 
