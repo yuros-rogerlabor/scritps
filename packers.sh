@@ -110,18 +110,18 @@ function packers_docsgen_deploy() {
         return
     fi
 
-    test -d $conten/docuster && rm -fr $conten/docuster
-    mkdir -p $conten/docuster
+    test -d $conten/document && rm -fr $conten/document
+    mkdir -p $conten/document
 
     for article in $list
     do
 
         if [[ $sums == 1 ]]; then
             local title=$(echo "$article" | sed 's/.md//g')
-            local file="$conten/docuster/_index.md"
+            local file="$conten/document/_index.md"
         else
             local title=$(echo "$article" | sed 's/.md//g')
-            local file="$conten/docuster/${title,,}.md"
+            local file="$conten/document/${title,,}.md"
         fi
         
         echo "---" > "$file"
@@ -133,7 +133,7 @@ function packers_docsgen_deploy() {
 
     done
 
-    ls -la $conten/docuster
+    ls -la $conten/document
 }
 
 
