@@ -1,5 +1,23 @@
 #!/bin/env bash
 
+hoster=./server
+
+## PREP
+function packers_prepar_generat() {
+
+    hugo new site $hoster
+    git clone https://github.com/almuhdilkarim/$skins $hoster/themes/$skins
+    ls -la &&
+    ls -la $hoster
+
+
+}
+
+function packers_prepar() {
+    packers_prepare_generat
+}
+
+
 
 ## APIS
 
@@ -129,6 +147,7 @@ function packer_sitegen() {
 
 ## INIT
 function packer() {
+    packers_prepar
     packer_apisgen
     packer_wikigen
     packer_sitegen
