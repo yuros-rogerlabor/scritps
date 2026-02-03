@@ -8,7 +8,8 @@ hoster=./server
 function packers_prepar_generat() {
 
     hugo new site $hoster
-    git clone "https://github.com/almuhdilkarim/${skins}" "$hoster/themes/${skins}"
+    echo $skins
+    git clone "https://github.com/almuhdilkarim/${skins}.git" "$hoster/themes/${skins}"
     ls -la &&
     ls -la $hoster/
     ls -la $hoster/themes
