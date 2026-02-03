@@ -21,7 +21,7 @@ function packers_prepar_engines() {
 function packers_prepar_content() {
     echo "--[2] prepare content"
     test -d $hoster/content && rm -fr $hoster/content
-    cp -fr .doc $hoster/content
+    cp -fr ./doc $hoster/content
 }
 
 
