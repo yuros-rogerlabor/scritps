@@ -13,11 +13,11 @@ function packers_prepar_engines() {
     hugo new site $hoster
     echo $skins
     git clone "https://github.com/almuhdilkarim/${skins}.git" "$hoster/themes/${skins}"
-    rm -fr $hoster/themes/${skins}/content/blog
+    rm -fr $hoster/themes/${skins}/content/tutorials
     rm -f $hoster/themes/${skins}/content/_index.md
 
     if [[ -n $source_linuxman ]]; then
-        rm -fr $hoster/themes/${skins}/content/mans
+        rm -fr $hoster/themes/${skins}/content/manuals
     fi
 }
 
@@ -25,7 +25,8 @@ function packers_prepar_engines() {
 function packers_prepar_content() {
     echo "--[2] prepare content"
     test -d $hoster/content && rm -fr $hoster/content
-    cp -fr ./doc $hoster/content
+    cp -fr ./doc/post $hoster/content/tutorials
+    cp -f ./doc/_index.md $hoster/content
 }
 
 
@@ -109,18 +110,18 @@ function packers_docsgen_deploy() {
         return
     fi
 
-    test -d $conten/docs && rm -fr $conten/docs
-    mkdir -p $conten/docs
+    test -d $conten/docuster && rm -fr $conten/docuster
+    mkdir -p $conten/docuster
 
     for article in $list
     do
 
         if [[ $sums == 1 ]]; then
             local title=$(echo "$article" | sed 's/.md//g')
-            local file="$conten/docs/_index.md"
+            local file="$conten/docuster/_index.md"
         else
             local title=$(echo "$article" | sed 's/.md//g')
-            local file="$conten/docs/${title,,}.md"
+            local file="$conten/docuster/${title,,}.md"
         fi
         
         echo "---" > "$file"
@@ -132,7 +133,7 @@ function packers_docsgen_deploy() {
 
     done
 
-    ls -la $conten/docs
+    ls -la $conten/docuster
 }
 
 
@@ -152,12 +153,12 @@ function packer_docsgen() {
 ## SITE
 function packers_mansgen_takers() {
 
-    local file="$conten/mans/_index.md"
+    local file="$conten/manuals/_index.md"
 
-    mkdir -p $conten/mans
+    mkdir -p $conten/manuals
 
 
-    curl -o $conten/mans/file.txt $source_linuxman.txt
+    curl -o $conten/manuals/file.txt $source_linuxman.txt
 
     echo "---" > "$file"
     echo "title : manual" >> "$file"
