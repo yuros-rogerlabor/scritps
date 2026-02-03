@@ -147,7 +147,14 @@ function packer_docsgen() {
 }
 
 
-## BASE
+
+
+function packer_mansgen() {
+    pandoc --version
+}
+
+
+## SITE
 function packer_sitegen_packcon() {
     test -d $hoster/config && rm -fr $hoster/config
     ls -la $hoster/themes/${skins}
