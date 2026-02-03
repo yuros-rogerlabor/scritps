@@ -129,6 +129,8 @@ function packers_docsgen_deploy() {
         ((sums++))
 
     done
+
+    ls -la $conten/docs
 }
 
 
