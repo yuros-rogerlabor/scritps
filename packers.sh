@@ -4,6 +4,7 @@
 ## APIS
 
 function packers_apisgen_prepar() {
+    echo "PACKERS LOADED" 
     mkdir -p ./assets/api/github
 }
 
