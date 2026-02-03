@@ -144,7 +144,12 @@ function packer_wikigen() {
 
 
 ## BASE
-function packer_sitegen_configs() {
+function packer_sitegen_packcon() {
+    test -d $hoster/config && rm -fr $hoster/config
+    cp -f $hoster/themes/${skins}/config $hoster/config
+}
+
+function packer_sitegen_sitecon() {
 
     test -f $hoster/hugo.toml && rm $hoster/hugo.toml
 
@@ -158,7 +163,8 @@ function packer_sitegen_configs() {
 
 
 function packer_sitegen() {
-    packer_sitegen_configs
+    packer_sitegen_packcon
+    packer_sitegen_sitecon
 }
 
 
