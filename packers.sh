@@ -3,8 +3,16 @@
 set -e
 
 hoster=./server
+conten=./server/content
+ghapis=./server/assets/api/github
 
 ## PREP
+function packers_prepar_content() {
+    test -d $hoster/content && rm -fr $hoster/content
+    cp -fr .doc $hoster/content
+}
+
+
 function packers_prepar_generat() {
 
     hugo new site $hoster
@@ -13,12 +21,12 @@ function packers_prepar_generat() {
     ls -la &&
     ls -la $hoster/
     ls -la $hoster/themes
-
-
 }
+
 
 function packers_prepar() {
     packers_prepar_generat
+    packers_prepar_content
 }
 
 
@@ -26,47 +34,39 @@ function packers_prepar() {
 ## APIS
 
 function packers_apisgen_prepar() {
-    echo "PACKERS LOADED" 
-    mkdir -p ./assets/api/github
+    test -d $hoster/assets/api/github/ && rm -fr $hoster/assets/api/github/
+    mkdir -p $hoster/assets/api/github
 }
 
 
 function packers_apisgen_reposi() {
-    test -f ./assets/api/github/repo.json && rm ./assets/api/github/repo.json
-    curl https://api.github.com/repos/$github_upstream > ./assets/api/github/repo.json
+    curl -o $ghapis/repo.json https://api.github.com/repos/$github_upstream 
 }
 
 
 function packers_apisgen_releas() {
-    test -f ./assets/api/github/rels.json && rm ./assets/api/github/rels.json
-    curl https://api.github.com/repos/$github_upstream/releases > ./assets/api/github/rels.json
+    curl -o $ghapis/rels.json https://api.github.com/repos/$github_upstream/releases 
 }
 
 
 function packers_apisgen_contri() {
-    test -f ./assets/api/github/cont.json && rm ./assets/api/github/cont.json
-    curl https://api.github.com/repos/$github_upstream/contributors > ./assets/api/github/cont.json
+    curl -o $ghapis/cont.json https://api.github.com/repos/$github_upstream/contributors
 }
 
 
 function packers_apisgen_versio() {
-    test -f ./assets/api/github/vers.json && rm ./assets/api/github/vers.json
-    curl https://api.github.com/repos/$github_upstream/releases/latest > ./assets/api/github/vers.json
+    curl -o $ghapis/vers.json https://api.github.com/repos/$github_upstream/releases/latest
 }
 
 
 function packers_apisgen_devels() {
-    test -f ./assets/api/github/devs.json && rm ./assets/api/github/devs.json
-    curl https://api.github.com/users/$github_publishe > ./assets/api/github/devs.json
-    echo "cat devs.json"
-    cat ./assets/api/github/devs.json
+    curl -o $ghapis/devs.json https://api.github.com/users/$github_publishe
 
 }
 
 
 function packers_apisgen_packer() {
-    test -f ./assets/api/github/pkgs.json && rm ./assets/api/github/pkgs.json
-    curl https://api.github.com/repos/$github_packager/contributors > ./assets/api/github/pkgs.json
+    curl -o $ghapis/pkgs.json https://api.github.com/repos/$github_packager/contributors
 }
 
 
@@ -88,25 +88,26 @@ function packers_wikigen_takers() {
 }
 
 
-function packers_wikigen_prepar() {
-    mv ./content/docs/_index.md ./content/wiki.md 
-    rm -fr ./content/docs/*
-}
-
 
 function packers_wikigen_deploy() {
 
     local list=$( ls ./temp/ )
     local sums=1
 
+    if [[ -z list ]];then
+        return
+    fi
+
+    mkdir -p $conten/docs
+
     for article in $list
     do
 
         if [[ counter == 1 ]]; then
-            local file="./content/docs/_index.md"
+            local file="$conten/docs/_index.md"
         else
             local title=$(echo "$article" | sed 's/.md//g')
-            local file="./content/docs/${title,,}.md"
+            local file="$conten/docs/${title,,}.md"
         fi
         
         echo "---" > "$file"
@@ -122,25 +123,24 @@ function packers_wikigen_deploy() {
 
 function packers_wikigen_finish() {
 
-    mv ./content/wiki.md  ./content/docs/_index.md 
     rm -fr ./temp
 }
 
 
 function packer_wikigen() {
     packers_wikigen_takers &&
-    packers_wikigen_prepar &&
     packers_wikigen_deploy &&
-    packers_wikigen_finish 
+    packers_wikigen_finish
 }
 
 
 ## BASE
 function packer_sitegen_configs() {
 
-    echo "title: $title"        >  hugo.yaml
-    echo "baseURL: $hosts"      >> hugo.yaml
-    echo "languageCode: $langs" >> hugo.yaml
+    echo "title: $title"        >  $server/hugo.yaml
+    echo "baseURL: $hosts"      >> $server/hugo.yaml
+    echo "languageCode: $langs" >> $server/hugo.yaml
+    echo "theme: $skins"        >> $server/hugo.yaml
 }
 
 
